@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-08-16T12:06:12 -->
+<!-- 2015-08-20T20:25:45 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Balance" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="82058e5f-4ff7-4857-9a43-8aef0c7db372">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL"/>
+	<parameter name="periodo" class="java.lang.String"/>
+	<parameter name="mesI" class="java.lang.Integer"/>
+	<parameter name="mesF" class="java.lang.Integer"/>
+	<parameter name="anio" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[SELECT R.registroId, C.nombre AS cuenta, L.nombre AS clasificacion, E.nombre AS elemento, fecha, corriente, descripcion, cantidad
 FROM registro R INNER JOIN cuenta C ON R.cuentaId = C.cuentaId AND R.clasificacionId = C.clasificacionId AND R.elementoId = C.elementoId
 INNER JOIN clasificacion L ON C.clasificacionId = L.clasificacionId AND C.elementoId = L.elementoId
 INNER JOIN elemento E ON C.elementoId = E.elementoId
+WHERE  MONTH(fecha) >= $P{mesI} AND MONTH(fecha) <= $P{mesF} AND YEAR(fecha) = $P{anio}
 ORDER BY C.elementoId, corriente DESC, C.clasificacionId]]>
 	</queryString>
 	<field name="registroId" class="java.lang.Integer">
@@ -341,7 +346,7 @@ ORDER BY C.elementoId, corriente DESC, C.clasificacionId]]>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement>
-						<font isUnderline="true" isStrikeThrough="true"/>
+						<font size="11" isUnderline="true" isStrikeThrough="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{clasificacion}]]></textFieldExpression>
 				</textField>
@@ -481,13 +486,6 @@ ORDER BY C.elementoId, corriente DESC, C.clasificacionId]]>
 				<text><![CDATA[Distribuciones Infantiles]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="30" width="572" height="20" uuid="4a78c7b8-c22c-4482-b473-b3b256476ffb"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="16" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Estado de situacion financiera al 31 de Diciembre del 2015]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="0" y="56" width="572" height="21" uuid="58f19933-cb0a-4508-94dc-4a8f246d65db"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
@@ -534,6 +532,15 @@ ORDER BY C.elementoId, corriente DESC, C.clasificacionId]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 			</line>
+			<textField>
+				<reportElement x="0" y="30" width="572" height="20" uuid="f321b96b-cc2e-4b1f-9492-1f6fc88cea6c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Estado de situacion financiera al " + $P{periodo}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<detail>

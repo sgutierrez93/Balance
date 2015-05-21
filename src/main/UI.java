@@ -1,6 +1,8 @@
 package main;
 
 import database.Database;
+import java.util.Calendar;
+import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
@@ -205,16 +207,24 @@ public class UI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        Calendar c = Calendar.getInstance();
+        HashMap parametros = new HashMap();
+        
+        parametros.put("periodo", (c.get(Calendar.MONTH) < 5 ? "30 de Junio" : "31 de Diciembre") + " del " + c.get(Calendar.YEAR));
+        parametros.put("mesI", c.get(Calendar.MONTH) < 5 ? 1 : 7);
+        parametros.put("mesF", c.get(Calendar.MONTH) < 5 ? 6 : 12);
+        parametros.put("anio", c.get(Calendar.YEAR));
+        
         try{
-                JasperPrint informe = JasperFillManager.fillReport("Balance.jasper", null, db.getConexion());
-                JasperViewer visor = new JasperViewer(informe, false);
-                
-                visor.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
-                visor.setTitle("Balance General");
-                visor.setVisible(true);
-            }catch(JRException ex){
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            JasperPrint informe = JasperFillManager.fillReport("Balance.jasper", parametros, db.getConexion());
+            JasperViewer visor = new JasperViewer(informe, false);
+
+            visor.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+            visor.setTitle("Balance General");
+            visor.setVisible(true);
+        }catch(JRException ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
