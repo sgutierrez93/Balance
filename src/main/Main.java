@@ -19,7 +19,7 @@ public class Main{
         UIManager.put("swing.boldMetal", Boolean.FALSE);
         
         try{
-            Database db = new Database(DBMS.MySQL, "balance", "192.168.0.4", "balance", "balance");
+            Database db = new Database(DBMS.MySQL, "balance", "190.99.18.171", "balance", "balance");
             new nucleo.Nucleo(db);
             EventQueue.invokeLater(() -> {
                 //Aqui va el JFrame Menu -> new Menu(db);
