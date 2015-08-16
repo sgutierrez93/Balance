@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-08-16T11:48:32 -->
+<!-- 2015-08-16T12:06:12 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Balance" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="82058e5f-4ff7-4857-9a43-8aef0c7db372">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL"/>
 	<queryString>
 		<![CDATA[SELECT R.registroId, C.nombre AS cuenta, L.nombre AS clasificacion, E.nombre AS elemento, fecha, corriente, descripcion, cantidad
 FROM registro R INNER JOIN cuenta C ON R.cuentaId = C.cuentaId AND R.clasificacionId = C.clasificacionId AND R.elementoId = C.elementoId
-				INNER JOIN clasificacion L ON C.clasificacionId = L.clasificacionId AND C.elementoId = L.elementoId
-                INNER JOIN elemento E ON C.elementoId = E.elementoId
+INNER JOIN clasificacion L ON C.clasificacionId = L.clasificacionId AND C.elementoId = L.elementoId
+INNER JOIN elemento E ON C.elementoId = E.elementoId
 ORDER BY C.elementoId, corriente DESC, C.clasificacionId]]>
 	</queryString>
 	<field name="registroId" class="java.lang.Integer">
