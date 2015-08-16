@@ -26,6 +26,16 @@ public class Main{
             Database db = new Database(DBMS.MySQL, "balance", "190.99.18.171", "balance", "balance");
             new nucleo.Nucleo(db);
             
+            try{
+                JasperPrint informe = JasperFillManager.fillReport("Balance.jasper", null, db.getConexion());
+                JasperViewer visor = new JasperViewer(informe, false);
+                
+                visor.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                visor.setTitle("Balance General");
+                visor.setVisible(true);
+            }catch(JRException e){
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
             EventQueue.invokeLater(() -> {
                 //Aqui va el JFrame Menu -> new Menu(db);
             });
