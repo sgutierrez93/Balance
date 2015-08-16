@@ -5,6 +5,10 @@ import java.awt.EventQueue;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -21,6 +25,7 @@ public class Main{
         try{
             Database db = new Database(DBMS.MySQL, "balance", "190.99.18.171", "balance", "balance");
             new nucleo.Nucleo(db);
+            
             EventQueue.invokeLater(() -> {
                 //Aqui va el JFrame Menu -> new Menu(db);
             });

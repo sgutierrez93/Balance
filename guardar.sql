@@ -1,0 +1,4 @@
+SELECT AUTO_INCREMENT INTO @inc FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'balance' AND TABLE_NAME = 'registro';
+
+INSERT INTO registro VALUES
+(null, 0, 0, 0, '2015-08-15', b'1', '', 0, null);
