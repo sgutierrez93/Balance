@@ -2,10 +2,10 @@
 -- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Aug 14, 2015 at 07:44 AM
--- Server version: 5.5.44-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.11
+-- Servidor: localhost
+-- Tiempo de generación: 16-08-2015 a las 13:19:18
+-- Versión del servidor: 5.5.44-0ubuntu0.14.04.1
+-- Versión de PHP: 5.5.9-1ubuntu4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,17 +17,44 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `balance`
+-- Base de datos: `balance`
 --
 CREATE DATABASE IF NOT EXISTS `balance` DEFAULT CHARACTER SET latin1 COLLATE latin1_spanish_ci;
 USE `balance`;
 
+DELIMITER $$
+--
+-- Procedimientos
+--
+DROP PROCEDURE IF EXISTS `sp_get_clasificacion`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_clasificacion`()
+    NO SQL
+SELECT * FROM clasificacion$$
+
+DROP PROCEDURE IF EXISTS `sp_get_cuenta`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_cuenta`()
+    NO SQL
+SELECT * FROM cuenta$$
+
+DROP PROCEDURE IF EXISTS `sp_get_elemento`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_elemento`()
+    NO SQL
+SELECT * FROM elemento$$
+
+DROP PROCEDURE IF EXISTS `sp_get_registro`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_registro`()
+    NO SQL
+SELECT * FROM registro$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `clasificacion`
+-- Estructura de tabla para la tabla `clasificacion`
 --
 
+DROP TABLE IF EXISTS `clasificacion`;
 CREATE TABLE IF NOT EXISTS `clasificacion` (
   `clasificacionId` int(2) NOT NULL,
   `elementoId` int(1) NOT NULL,
@@ -37,30 +64,32 @@ CREATE TABLE IF NOT EXISTS `clasificacion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
--- Dumping data for table `clasificacion`
+-- Volcado de datos para la tabla `clasificacion`
 --
 
-INSERT INTO `clasificacion` VALUES(1, 1, 'Efectivo y Equivalentes');
-INSERT INTO `clasificacion` VALUES(1, 2, 'Cuentas por Pagar');
-INSERT INTO `clasificacion` VALUES(1, 3, 'Individual');
-INSERT INTO `clasificacion` VALUES(2, 1, 'Cuentas por Cobrar');
-INSERT INTO `clasificacion` VALUES(2, 2, 'Prestamos');
-INSERT INTO `clasificacion` VALUES(2, 3, 'Social');
-INSERT INTO `clasificacion` VALUES(3, 1, 'Inventarios');
-INSERT INTO `clasificacion` VALUES(3, 2, 'Obligaciones por Provisiones');
-INSERT INTO `clasificacion` VALUES(4, 1, 'Pagos por Anticipado');
-INSERT INTO `clasificacion` VALUES(4, 2, 'Valores Cobrados por Anticipado');
-INSERT INTO `clasificacion` VALUES(5, 1, 'Inversiones y Valores');
-INSERT INTO `clasificacion` VALUES(6, 1, 'Propiedad, Planta y Equipo');
-INSERT INTO `clasificacion` VALUES(7, 1, 'Activos Intangibles');
-INSERT INTO `clasificacion` VALUES(8, 1, 'Otros Activos');
+INSERT INTO `clasificacion` VALUES
+(1, 1, 'Efectivo y Equivalentes'),
+(1, 2, 'Cuentas por Pagar'),
+(1, 3, 'Individual'),
+(2, 1, 'Cuentas por Cobrar'),
+(2, 2, 'Prestamos'),
+(2, 3, 'Social'),
+(3, 1, 'Inventarios'),
+(3, 2, 'Obligaciones por Provisiones'),
+(4, 1, 'Pagos por Anticipado'),
+(4, 2, 'Valores Cobrados por Anticipado'),
+(5, 1, 'Inversiones y Valores'),
+(6, 1, 'Propiedad, Planta y Equipo'),
+(7, 1, 'Activos Intangibles'),
+(8, 1, 'Otros Activos');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cuenta`
+-- Estructura de tabla para la tabla `cuenta`
 --
 
+DROP TABLE IF EXISTS `cuenta`;
 CREATE TABLE IF NOT EXISTS `cuenta` (
   `cuentaId` int(2) NOT NULL,
   `clasificacionId` int(2) NOT NULL,
@@ -72,81 +101,84 @@ CREATE TABLE IF NOT EXISTS `cuenta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
--- Dumping data for table `cuenta`
+-- Volcado de datos para la tabla `cuenta`
 --
 
-INSERT INTO `cuenta` VALUES(1, 1, 1, 'Caja');
-INSERT INTO `cuenta` VALUES(1, 1, 2, 'Acreedores Varios');
-INSERT INTO `cuenta` VALUES(1, 1, 3, 'Capital');
-INSERT INTO `cuenta` VALUES(2, 1, 1, 'Caja Chica');
-INSERT INTO `cuenta` VALUES(2, 1, 2, 'Obligaciones por Provisiones');
-INSERT INTO `cuenta` VALUES(2, 1, 3, 'Utilidad o Perdida del Periodo');
-INSERT INTO `cuenta` VALUES(3, 1, 1, 'Bancos');
-INSERT INTO `cuenta` VALUES(3, 1, 2, 'Documentos por Pagar');
-INSERT INTO `cuenta` VALUES(3, 1, 3, 'Utilidad o Perdida de Periodos Anteriores');
-INSERT INTO `cuenta` VALUES(4, 1, 1, 'Bancos Ahorros');
-INSERT INTO `cuenta` VALUES(4, 1, 2, 'Proveedores');
-INSERT INTO `cuenta` VALUES(4, 2, 3, 'Capital Social');
-INSERT INTO `cuenta` VALUES(5, 1, 1, 'Inversiones Temporales');
-INSERT INTO `cuenta` VALUES(5, 1, 2, 'Acreedores Varios');
-INSERT INTO `cuenta` VALUES(5, 2, 3, 'Reserva Legal');
-INSERT INTO `cuenta` VALUES(6, 1, 2, 'Otras Cuentas por Pagar');
-INSERT INTO `cuenta` VALUES(6, 2, 1, 'Clientes');
-INSERT INTO `cuenta` VALUES(6, 2, 3, 'Reserva de Presion');
-INSERT INTO `cuenta` VALUES(7, 2, 1, 'Documentos por Cobrar');
-INSERT INTO `cuenta` VALUES(7, 2, 2, 'Prestamos Bancarios');
-INSERT INTO `cuenta` VALUES(7, 2, 3, 'Reserva de Reinversion');
-INSERT INTO `cuenta` VALUES(8, 2, 1, 'Deudores Varios');
-INSERT INTO `cuenta` VALUES(8, 2, 2, 'Hipotecas por Pagar');
-INSERT INTO `cuenta` VALUES(8, 2, 3, 'Reserva de Educacion');
-INSERT INTO `cuenta` VALUES(9, 2, 1, 'Anticipos a Empleados');
-INSERT INTO `cuenta` VALUES(9, 2, 3, 'Utilidades Acumuladas');
-INSERT INTO `cuenta` VALUES(9, 3, 2, 'Provisiones por Garantias');
-INSERT INTO `cuenta` VALUES(10, 2, 1, 'Servicios por Cobrar');
-INSERT INTO `cuenta` VALUES(10, 2, 3, 'Perdidas No Aplicadas');
-INSERT INTO `cuenta` VALUES(10, 3, 2, 'Provisiones para Beneficios de Empleados');
-INSERT INTO `cuenta` VALUES(11, 2, 3, 'Utilidad o Perdida del Periodo');
-INSERT INTO `cuenta` VALUES(11, 3, 1, 'Inventario de Mercaderias');
-INSERT INTO `cuenta` VALUES(11, 4, 2, 'Rentas Cobradas por Anticipado');
-INSERT INTO `cuenta` VALUES(12, 3, 1, 'Almacen de Materia Prima');
-INSERT INTO `cuenta` VALUES(12, 4, 2, 'Anticipos de Clientes');
-INSERT INTO `cuenta` VALUES(13, 3, 1, 'Almacen de Productos en Proceso');
-INSERT INTO `cuenta` VALUES(13, 4, 2, 'Intereses Cobrados por Anticipado');
-INSERT INTO `cuenta` VALUES(14, 4, 1, 'Seguros Pagados por Anticipado');
-INSERT INTO `cuenta` VALUES(15, 4, 1, 'Rentas Pagadas por Anticipado');
-INSERT INTO `cuenta` VALUES(16, 4, 1, 'Impuesto Sobre Ventas Pagados');
-INSERT INTO `cuenta` VALUES(17, 4, 1, 'Pago Anticipado de Impuesto');
-INSERT INTO `cuenta` VALUES(18, 4, 1, 'Intereses Pagados por Anticipado');
-INSERT INTO `cuenta` VALUES(19, 4, 1, 'Papeleria y Utiles');
-INSERT INTO `cuenta` VALUES(20, 4, 1, 'Material de Empaque');
-INSERT INTO `cuenta` VALUES(21, 4, 1, 'Material de Aseo');
-INSERT INTO `cuenta` VALUES(22, 4, 1, 'Anticipos a Proveedores');
-INSERT INTO `cuenta` VALUES(23, 4, 1, 'Publicidad');
-INSERT INTO `cuenta` VALUES(24, 4, 1, 'Accesorios y Suministros');
-INSERT INTO `cuenta` VALUES(25, 5, 1, 'Depositos a Plazo Fijo');
-INSERT INTO `cuenta` VALUES(26, 5, 1, 'Inversiones y Valores');
-INSERT INTO `cuenta` VALUES(27, 5, 1, 'Inversiones en Bonos');
-INSERT INTO `cuenta` VALUES(28, 6, 1, 'Terrenos');
-INSERT INTO `cuenta` VALUES(29, 6, 1, 'Edificios');
-INSERT INTO `cuenta` VALUES(30, 6, 1, 'Maquinaria');
-INSERT INTO `cuenta` VALUES(31, 6, 1, 'Mobiliario y Equipo');
-INSERT INTO `cuenta` VALUES(32, 6, 1, 'Equipo de Reparto');
-INSERT INTO `cuenta` VALUES(33, 6, 1, 'Equipo de Transporte');
-INSERT INTO `cuenta` VALUES(34, 6, 1, 'Herramientas');
-INSERT INTO `cuenta` VALUES(35, 7, 1, 'Marcas');
-INSERT INTO `cuenta` VALUES(36, 7, 1, 'Patentes');
-INSERT INTO `cuenta` VALUES(37, 7, 1, 'Derechos de Autor');
-INSERT INTO `cuenta` VALUES(38, 7, 1, 'Franquicias');
-INSERT INTO `cuenta` VALUES(39, 7, 1, 'Aplicaciones de Informatica');
-INSERT INTO `cuenta` VALUES(40, 7, 1, 'Credito Mercantil');
-INSERT INTO `cuenta` VALUES(41, 8, 1, 'Depositos en Garantia');
+INSERT INTO `cuenta` VALUES
+(1, 1, 1, 'Caja'),
+(1, 1, 2, 'Acreedores Varios'),
+(1, 1, 3, 'Capital'),
+(2, 1, 1, 'Caja Chica'),
+(2, 1, 2, 'Obligaciones por Provisiones'),
+(2, 1, 3, 'Utilidad o Perdida del Periodo'),
+(3, 1, 1, 'Bancos'),
+(3, 1, 2, 'Documentos por Pagar'),
+(3, 1, 3, 'Utilidad o Perdida de Periodos Anteriores'),
+(4, 1, 1, 'Bancos Ahorros'),
+(4, 1, 2, 'Proveedores'),
+(4, 2, 3, 'Capital Social'),
+(5, 1, 1, 'Inversiones Temporales'),
+(5, 2, 3, 'Reserva Legal'),
+(6, 1, 2, 'Otras Cuentas por Pagar'),
+(6, 2, 1, 'Clientes'),
+(6, 2, 3, 'Reserva de Presion'),
+(7, 2, 1, 'Documentos por Cobrar'),
+(7, 2, 2, 'Prestamos Bancarios'),
+(7, 2, 3, 'Reserva de Reinversion'),
+(8, 2, 1, 'Deudores Varios'),
+(8, 2, 2, 'Hipotecas por Pagar'),
+(8, 2, 3, 'Reserva de Educacion'),
+(9, 2, 1, 'Anticipos a Empleados'),
+(9, 2, 3, 'Utilidades Acumuladas'),
+(9, 3, 2, 'Provisiones por Garantias'),
+(10, 2, 1, 'Servicios por Cobrar'),
+(10, 2, 3, 'Perdidas No Aplicadas'),
+(10, 3, 2, 'Provisiones para Beneficios de Empleados'),
+(11, 2, 3, 'Utilidad o Perdida del Periodo'),
+(11, 3, 1, 'Inventario de Mercaderias'),
+(11, 4, 2, 'Rentas Cobradas por Anticipado'),
+(12, 3, 1, 'Almacen de Materia Prima'),
+(12, 4, 2, 'Anticipos de Clientes'),
+(13, 3, 1, 'Almacen de Productos en Proceso'),
+(13, 4, 2, 'Intereses Cobrados por Anticipado'),
+(14, 4, 1, 'Seguros Pagados por Anticipado'),
+(15, 4, 1, 'Rentas Pagadas por Anticipado'),
+(16, 4, 1, 'Impuesto Sobre Ventas Pagados'),
+(17, 4, 1, 'Pago Anticipado de Impuesto'),
+(18, 4, 1, 'Intereses Pagados por Anticipado'),
+(19, 4, 1, 'Papeleria y Utiles'),
+(20, 4, 1, 'Material de Empaque'),
+(21, 4, 1, 'Material de Aseo'),
+(22, 4, 1, 'Anticipos a Proveedores'),
+(23, 4, 1, 'Publicidad'),
+(24, 4, 1, 'Accesorios y Suministros'),
+(25, 5, 1, 'Depositos a Plazo Fijo'),
+(26, 5, 1, 'Inversiones y Valores'),
+(27, 5, 1, 'Inversiones en Bonos'),
+(28, 6, 1, 'Terrenos'),
+(29, 6, 1, 'Edificios'),
+(30, 6, 1, 'Maquinaria'),
+(31, 6, 1, 'Mobiliario y Equipo'),
+(32, 6, 1, 'Equipo de Reparto'),
+(33, 6, 1, 'Equipo de Transporte'),
+(34, 6, 1, 'Herramientas'),
+(35, 7, 1, 'Marcas'),
+(36, 7, 1, 'Patentes'),
+(37, 7, 1, 'Derechos de Autor'),
+(38, 7, 1, 'Franquicias'),
+(39, 7, 1, 'Aplicaciones de Informatica'),
+(40, 7, 1, 'Credito Mercantil'),
+(41, 8, 1, 'Depositos en Garantia'),
+(42, 4, 1, 'Gastos de Organizacion'),
+(43, 4, 1, 'Primas de Seguro');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `elemento`
+-- Estructura de tabla para la tabla `elemento`
 --
 
+DROP TABLE IF EXISTS `elemento`;
 CREATE TABLE IF NOT EXISTS `elemento` (
   `elementoId` int(1) NOT NULL,
   `nombre` varchar(7) COLLATE latin1_spanish_ci NOT NULL,
@@ -154,53 +186,57 @@ CREATE TABLE IF NOT EXISTS `elemento` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
--- Dumping data for table `elemento`
+-- Volcado de datos para la tabla `elemento`
 --
 
-INSERT INTO `elemento` VALUES(1, 'Activo');
-INSERT INTO `elemento` VALUES(2, 'Pasivo');
-INSERT INTO `elemento` VALUES(3, 'Capital');
+INSERT INTO `elemento` VALUES
+(1, 'Activo'),
+(2, 'Pasivo'),
+(3, 'Capital');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `registro`
+-- Estructura de tabla para la tabla `registro`
 --
 
+DROP TABLE IF EXISTS `registro`;
 CREATE TABLE IF NOT EXISTS `registro` (
   `registroId` int(3) NOT NULL AUTO_INCREMENT,
   `cuentaId` int(2) NOT NULL,
   `clasificacionId` int(2) NOT NULL,
   `elementoId` int(1) NOT NULL,
+  `fecha` date NOT NULL,
+  `corriente` bit(1) NOT NULL,
   `descripcion` varchar(255) COLLATE latin1_spanish_ci NOT NULL,
-  `cantidad` decimal(7,2) NOT NULL,
+  `cantidad` decimal(9,2) NOT NULL,
   `registro` int(3) DEFAULT NULL,
   PRIMARY KEY (`registroId`,`cuentaId`,`clasificacionId`,`elementoId`),
   KEY `registro` (`registro`),
   KEY `cuentaId` (`cuentaId`),
   KEY `elementoId` (`elementoId`),
   KEY `registro_clasificacionId_PK` (`clasificacionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci AUTO_INCREMENT=14 ;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `clasificacion`
+-- Filtros para la tabla `clasificacion`
 --
 ALTER TABLE `clasificacion`
   ADD CONSTRAINT `clasificacion_elementoId_PK` FOREIGN KEY (`elementoId`) REFERENCES `elemento` (`elementoId`);
 
 --
--- Constraints for table `cuenta`
+-- Filtros para la tabla `cuenta`
 --
 ALTER TABLE `cuenta`
   ADD CONSTRAINT `cuenta_clasificacionId_PK` FOREIGN KEY (`clasificacionId`) REFERENCES `clasificacion` (`clasificacionId`),
   ADD CONSTRAINT `cuenta_elementoId_PK` FOREIGN KEY (`elementoId`) REFERENCES `clasificacion` (`elementoId`);
 
 --
--- Constraints for table `registro`
+-- Filtros para la tabla `registro`
 --
 ALTER TABLE `registro`
   ADD CONSTRAINT `registro_clasificacionId_PK` FOREIGN KEY (`clasificacionId`) REFERENCES `cuenta` (`clasificacionId`),
