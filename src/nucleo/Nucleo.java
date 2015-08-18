@@ -24,8 +24,14 @@ public class Nucleo{
         loadRegistro();
     }
     
-    public Clasificacion[] getClasificaciones(){
-        return clasificacion.toArray(new Clasificacion[0]);
+    public Clasificacion[] getClasificaciones(Elemento elemento){
+        ArrayList<Clasificacion> temp = new ArrayList<>();
+        
+        clasificacion.stream().filter((c) -> (c.getElemento().getElementoId() == elemento.getElementoId())).forEach((c) -> {
+            temp.add(c);
+        });
+        
+        return temp.toArray(new Clasificacion[0]);
     }
     
     public Cuenta[] getCuenta(){

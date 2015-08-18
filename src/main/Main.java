@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -23,21 +25,20 @@ public class Main{
         UIManager.put("swing.boldMetal", Boolean.FALSE);
         
         try{
+            for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+                if ("Nimbus".equals(info.getName())){
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+        }catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        try{
             Database db = new Database(DBMS.MySQL, "balance", "190.99.18.171", "balance", "balance");
-            new nucleo.Nucleo(db);
             
-            try{
-                JasperPrint informe = JasperFillManager.fillReport("Balance.jasper", null, db.getConexion());
-                JasperViewer visor = new JasperViewer(informe, false);
-                
-                visor.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
-                visor.setTitle("Balance General");
-                visor.setVisible(true);
-            }catch(JRException ex){
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
             EventQueue.invokeLater(() -> {
-                //Aqui va el JFrame Menu -> new Menu(db);
+                new UI(db).setVisible(true);
             });
         }catch (SQLException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
