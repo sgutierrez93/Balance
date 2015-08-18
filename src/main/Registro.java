@@ -38,6 +38,12 @@ public class Registro extends javax.swing.JPanel {
 
         jLabel1.setText("Elemento");
 
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField2KeyTyped(evt);
+            }
+        });
+
         jComboBox6.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox6ItemStateChanged(evt);
@@ -127,6 +133,11 @@ public class Registro extends javax.swing.JPanel {
                 core.getCuenta((nucleo.Clasificacion)jComboBox6.getSelectedItem())
         ));
     }//GEN-LAST:event_jComboBox6ItemStateChanged
+
+    private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
+        if((evt.getKeyChar() <= '0' || evt.getKeyChar() >= '9') && (evt.getKeyChar() != '.' || jTextField2.getText().indexOf('.') > -1))
+            evt.consume();
+    }//GEN-LAST:event_jTextField2KeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
