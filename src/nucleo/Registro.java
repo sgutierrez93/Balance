@@ -53,7 +53,7 @@ public class Registro{
     }
     
     @Override public String toString(){
-        return String.valueOf(getCantidad());
+        return getDescripcion();
     }
     
     private final double cantidad;

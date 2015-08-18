@@ -27,19 +27,35 @@ public class Nucleo{
     public Clasificacion[] getClasificaciones(Elemento elemento){
         ArrayList<Clasificacion> temp = new ArrayList<>();
         
-        clasificacion.stream().filter((c) -> (c.getElemento().getElementoId() == elemento.getElementoId())).forEach((c) -> {
-            temp.add(c);
+        temp.add(null);
+        
+        clasificacion.stream().forEach((c) -> {
+            if(c != null && c.getElemento().getElementoId() == elemento.getElementoId())
+                    temp.add(c);
         });
         
         return temp.toArray(new Clasificacion[0]);
     }
     
-    public Cuenta[] getCuenta(){
-        return cuenta.toArray(new Cuenta[0]);
+    public Cuenta[] getCuenta(Clasificacion clasificacion){
+        ArrayList<Cuenta> temp = new ArrayList<>();
+        
+        temp.add(null);
+        
+        cuenta.stream().forEach((c) -> {
+            if(c != null && c.getClasificacion().getClasificacionId() == clasificacion.getClasificacionId() && c.getClasificacion().getElemento().getElementoId() == clasificacion.getElemento().getElementoId())
+                temp.add(c);
+        });
+        
+        return temp.toArray(new Cuenta[0]);
     }
     
     public Elemento[] getElementos(){
         return elemento.toArray(new Elemento[0]);
+    }
+    
+    public Registro[] getRegistros(){
+        return registro.toArray(new Registro[0]);
     }
     
     private void loadClasificacion(){

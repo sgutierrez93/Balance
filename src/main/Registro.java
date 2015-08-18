@@ -38,6 +38,12 @@ public class Registro extends javax.swing.JPanel {
 
         jLabel1.setText("Elemento");
 
+        jComboBox6.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox6ItemStateChanged(evt);
+            }
+        });
+
         jComboBox5.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox5ItemStateChanged(evt);
@@ -108,7 +114,19 @@ public class Registro extends javax.swing.JPanel {
             :
                 core.getClasificaciones((nucleo.Elemento)jComboBox5.getSelectedItem())
         ));
+        
+        if(jComboBox5.getSelectedIndex() < 1)
+            jComboBox6ItemStateChanged(evt);
     }//GEN-LAST:event_jComboBox5ItemStateChanged
+
+    private void jComboBox6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox6ItemStateChanged
+        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel(
+            jComboBox6.getSelectedItem() == null ?
+                new nucleo.Cuenta[]{null}
+            :
+                core.getCuenta((nucleo.Clasificacion)jComboBox6.getSelectedItem())
+        ));
+    }//GEN-LAST:event_jComboBox6ItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
