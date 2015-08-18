@@ -33,8 +33,8 @@ public class Main{
                 visor.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
                 visor.setTitle("Balance General");
                 visor.setVisible(true);
-            }catch(JRException e){
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }catch(JRException ex){
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
             EventQueue.invokeLater(() -> {
                 //Aqui va el JFrame Menu -> new Menu(db);
