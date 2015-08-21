@@ -85,7 +85,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Categoria"/>
+        <Property name="text" type="java.lang.String" value="Clasificacion"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">

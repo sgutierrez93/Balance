@@ -34,7 +34,7 @@ public class Registro extends javax.swing.JPanel {
         jComboBox7 = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
 
-        jLabel2.setText("Categoria");
+        jLabel2.setText("Clasificacion");
 
         jLabel1.setText("Elemento");
 
@@ -135,10 +135,25 @@ public class Registro extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox6ItemStateChanged
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
-        if((evt.getKeyChar() <= '0' || evt.getKeyChar() >= '9') && (evt.getKeyChar() != '.' || jTextField2.getText().indexOf('.') > -1))
+        if((evt.getKeyChar() < '0' || evt.getKeyChar() > '9') && (evt.getKeyChar() != '.' || jTextField2.getText().indexOf('.') > -1))
             evt.consume();
     }//GEN-LAST:event_jTextField2KeyTyped
-
+    
+    public nucleo.Elemento getElemento(){
+        return (nucleo.Elemento)jComboBox5.getSelectedItem();
+    }
+    
+    public nucleo.Clasificacion getClasificacion(){
+        return (nucleo.Clasificacion)jComboBox6.getSelectedItem();
+    }
+    
+    public nucleo.Cuenta getCuenta(){
+        return (nucleo.Cuenta)jComboBox7.getSelectedItem();
+    }
+    
+    public double getCantidad(){
+        return Double.parseDouble(jTextField2.getText());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jComboBox5;

@@ -129,7 +129,7 @@ public class Nucleo{
         registro.add(null);
         
         try{
-            ResultSet sql = db.executeReader("CALL sp_get_registro()");
+            ResultSet sql = db.executeReader("CALL sp_get_registro_groupby_descripcion()");
             
             while(sql.next()){
                 Cuenta _cuenta = null;

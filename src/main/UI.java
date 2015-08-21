@@ -67,6 +67,12 @@ public class UI extends javax.swing.JFrame {
 
         jLabel4.setText("Registro");
 
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
+
         jLabel5.setText("Descripcion");
 
         jButton1.setText("Limpiar");
@@ -77,6 +83,11 @@ public class UI extends javax.swing.JFrame {
         });
 
         jButton2.setText("Guardar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Salir");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -226,7 +237,7 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if(jTabbedPane1.getSelectedIndex() >= 0){
+        if(jTabbedPane1.getSelectedIndex() > -1){
             int res = javax.swing.JOptionPane.showConfirmDialog(null, "Desea quitar esta transaccion?");
             
             if(res == javax.swing.JOptionPane.OK_OPTION)
@@ -245,6 +256,84 @@ public class UI extends javax.swing.JFrame {
         i = 0;
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        if(evt.getKeyChar() == '\'' || evt.getKeyChar() == '\"')
+            evt.consume();
+    }//GEN-LAST:event_jTextField1KeyTyped
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(validation())
+            /*try{
+                //------------------------------------------------------------------
+                int registroId = 0;
+                java.sql.ResultSet sql;
+                
+                sql = db.executeReader("SELECT fn_get_registro_AI() AS AI");
+
+                if(sql.next())
+                    registroId = sql.getInt("AI");
+
+                db.closeQuery();
+                //------------------------------------------------------------------
+                int cuentaId = ((Registro)jTabbedPane1.getComponentAt(0)).getCuenta().getCuentaId();
+                int clasificacionId = ((Registro)jTabbedPane1.getComponentAt(0)).getClasificacion().getClasificacionId();
+                int elementoId = ((Registro)jTabbedPane1.getComponentAt(0)).getElemento().getElementoId();
+                String fecha = new java.text.SimpleDateFormat("dd-MM-yyyy").format(new java.util.Date());
+                int corriente = true ? 1 : 0;
+                String descripcion = jTextField1.getText();
+                double cantidad = ((Registro)jTabbedPane1.getComponentAt(0)).getCantidad();
+                Object registro = null;
+
+                db.executeNonQuery("CALL sp_insert_registro(" + registroId + ", " + cuentaId + ", " + clasificacionId + ", " + elementoId + ", STR_TO_DATE('" + fecha + "', '%d-%m-%Y'), b'" + corriente + "', '" + descripcion + "', " + cantidad + ", " + registro + ")");
+            }catch(java.sql.SQLException ex){
+                javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }*/
+            System.out.println("Guardar!");
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private boolean validation(){
+        boolean validate = true;
+        
+        if(jTextField1.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(null, "La descripcion de la Transaccion no debe ir en blanco!", "Error", JOptionPane.ERROR_MESSAGE);
+                
+            validate = false;
+        }
+        
+        if(jTabbedPane1.getComponentCount() == 0){
+            JOptionPane.showMessageDialog(null, "Deben existir cuentas que ingresar!", "Error", JOptionPane.ERROR_MESSAGE);
+                
+            validate = false;
+        }else
+            for(int j = 0; j < jTabbedPane1.getComponentCount(); j++){
+                if(((Registro)jTabbedPane1.getComponentAt(j)).getElemento() == null){
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar el Elemento de la ecuacion contable en la Transaccion(" + (j + 1) + ")!", "Error", JOptionPane.ERROR_MESSAGE);
+
+                    validate = false;
+                }
+                
+                if(((Registro)jTabbedPane1.getComponentAt(j)).getClasificacion() == null){
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar una Clasificacion de las cuentas en la Transaccion(" + (j + 1) + ")!", "Error", JOptionPane.ERROR_MESSAGE);
+
+                    validate = false;
+                }
+                
+                if(((Registro)jTabbedPane1.getComponentAt(j)).getCuenta() == null){
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar una Cuenta en la Transaccion(" + (j + 1) + ")!", "Error", JOptionPane.ERROR_MESSAGE);
+
+                    validate = false;
+                }
+                
+                if(((Registro)jTabbedPane1.getComponentAt(j)).getCantidad() == 0f){
+                    JOptionPane.showMessageDialog(null, "", "Error", JOptionPane.ERROR_MESSAGE);
+                    
+                    validate = false;
+                }
+            }
+        
+        return validate;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

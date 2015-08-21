@@ -3,17 +3,13 @@ package main;
 import database.*;
 import java.awt.EventQueue;
 import java.sql.SQLException;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
-
+ 
 /**
- *
  * @author Sergio Gutierrez
  */
 public class Main{
@@ -40,7 +36,7 @@ public class Main{
             EventQueue.invokeLater(() -> {
                 new UI(db).setVisible(true);
             });
-        }catch (SQLException ex){
+        }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
