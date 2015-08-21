@@ -1,6 +1,7 @@
 package main;
 
 import database.Database;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -238,22 +239,19 @@ public class UI extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if(jTabbedPane1.getSelectedIndex() > -1){
-            int res = javax.swing.JOptionPane.showConfirmDialog(null, "Desea quitar esta transaccion?");
+            int res = JOptionPane.showConfirmDialog(null, "Desea quitar esta transaccion?");
             
-            if(res == javax.swing.JOptionPane.OK_OPTION)
+            if(res == JOptionPane.OK_OPTION)
                 jTabbedPane1.remove(jTabbedPane1.getSelectedIndex());
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(core.getRegistros()));
+        jComboBox1.setModel(new DefaultComboBoxModel(core.getRegistros()));
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jTextField1.setText("");
-        jComboBox1.setSelectedIndex(0);
-        jTabbedPane1.removeAll();
-        i = 0;
+        vaciar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
@@ -263,7 +261,7 @@ public class UI extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if(validation())
-            /*try{
+            try{
                 //------------------------------------------------------------------
                 int registroId = 0;
                 java.sql.ResultSet sql;
@@ -275,21 +273,32 @@ public class UI extends javax.swing.JFrame {
 
                 db.closeQuery();
                 //------------------------------------------------------------------
-                int cuentaId = ((Registro)jTabbedPane1.getComponentAt(0)).getCuenta().getCuentaId();
-                int clasificacionId = ((Registro)jTabbedPane1.getComponentAt(0)).getClasificacion().getClasificacionId();
-                int elementoId = ((Registro)jTabbedPane1.getComponentAt(0)).getElemento().getElementoId();
-                String fecha = new java.text.SimpleDateFormat("dd-MM-yyyy").format(new java.util.Date());
-                int corriente = true ? 1 : 0;
-                String descripcion = jTextField1.getText();
-                double cantidad = ((Registro)jTabbedPane1.getComponentAt(0)).getCantidad();
-                Object registro = null;
+                for(int j = 0; j < jTabbedPane1.getComponentCount(); j++){
+                    int cuentaId = ((Registro)jTabbedPane1.getComponentAt(j)).getCuenta().getCuentaId();
+                    int clasificacionId = ((Registro)jTabbedPane1.getComponentAt(j)).getClasificacion().getClasificacionId();
+                    int elementoId = ((Registro)jTabbedPane1.getComponentAt(j)).getElemento().getElementoId();
+                    String fecha = new java.text.SimpleDateFormat("dd-MM-yyyy").format(new java.util.Date());
+                    int corriente = ((Registro)jTabbedPane1.getComponentAt(j)).getCorriente() ? 1 : 0;
+                    String descripcion = jTextField1.getText();
+                    double cantidad = ((Registro)jTabbedPane1.getComponentAt(j)).getCantidad();
+                    Object registro = jComboBox1.getSelectedItem() == null ? null : ((nucleo.Registro)jComboBox1.getSelectedItem()).getRegistroId();
 
-                db.executeNonQuery("CALL sp_insert_registro(" + registroId + ", " + cuentaId + ", " + clasificacionId + ", " + elementoId + ", STR_TO_DATE('" + fecha + "', '%d-%m-%Y'), b'" + corriente + "', '" + descripcion + "', " + cantidad + ", " + registro + ")");
+                    db.executeNonQuery("CALL sp_insert_registro(" + registroId + ", " + cuentaId + ", " + clasificacionId + ", " + elementoId + ", STR_TO_DATE('" + fecha + "', '%d-%m-%Y'), b'" + corriente + "', '" + descripcion + "', " + cantidad + ", " + registro + ")");
+                }
+                
+                vaciar();
+                JOptionPane.showMessageDialog(null, "Transaccion realizada exitosamente!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             }catch(java.sql.SQLException ex){
-                javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }*/
-            System.out.println("Guardar!");
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
     }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void vaciar(){
+        jTextField1.setText("");
+        jComboBox1.setSelectedIndex(0);
+        jTabbedPane1.removeAll();
+        i = 0;
+    }
     
     private boolean validation(){
         boolean validate = true;

@@ -33,6 +33,8 @@ public class Registro extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jComboBox7 = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel4 = new javax.swing.JLabel();
 
         jLabel2.setText("Clasificacion");
 
@@ -56,9 +58,17 @@ public class Registro extends javax.swing.JPanel {
             }
         });
 
-        jLabel6.setText("Cantidad");
+        jLabel6.setText("Corriente");
+
+        jComboBox7.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox7ItemStateChanged(evt);
+            }
+        });
 
         jLabel3.setText("Cuenta");
+
+        jLabel4.setText("Cantidad");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -81,13 +91,16 @@ public class Registro extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel6))
-                        .addGap(43, 43, 43)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel4))
+                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox7, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE))
-                            .addComponent(jComboBox7, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCheckBox1))
+                                .addGap(0, 106, Short.MAX_VALUE)))))
                 .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
@@ -106,10 +119,14 @@ public class Registro extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jCheckBox1))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -138,6 +155,14 @@ public class Registro extends javax.swing.JPanel {
         if((evt.getKeyChar() < '0' || evt.getKeyChar() > '9') && (evt.getKeyChar() != '.' || jTextField2.getText().indexOf('.') > -1))
             evt.consume();
     }//GEN-LAST:event_jTextField2KeyTyped
+
+    private void jComboBox7ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox7ItemStateChanged
+        boolean a = ((nucleo.Elemento)jComboBox5.getSelectedItem()).getElementoId() == 1 && ((nucleo.Clasificacion)jComboBox6.getSelectedItem()).getClasificacionId() <= 4;
+        boolean p = ((nucleo.Elemento)jComboBox5.getSelectedItem()).getElementoId() == 2 && ((nucleo.Clasificacion)jComboBox6.getSelectedItem()).getClasificacionId() != 2;
+        boolean sel = a | p;
+        
+        jCheckBox1.setSelected(sel);
+    }//GEN-LAST:event_jComboBox7ItemStateChanged
     
     public nucleo.Elemento getElemento(){
         return (nucleo.Elemento)jComboBox5.getSelectedItem();
@@ -151,17 +176,23 @@ public class Registro extends javax.swing.JPanel {
         return (nucleo.Cuenta)jComboBox7.getSelectedItem();
     }
     
+    public boolean getCorriente(){
+        return jCheckBox1.isSelected();
+    }
+    
     public double getCantidad(){
         return Double.parseDouble(jTextField2.getText());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox5;
     private javax.swing.JComboBox jComboBox6;
     private javax.swing.JComboBox jComboBox7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
